@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+<title>EDEN BLOOD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2EFE8;
+    --ink:#0C0B0A;
+    --blood:#AD0A0A;
+    --ash:#8B867C;
+    --line: rgba(12,11,10,0.12);
+  }
+
+  *{margin:0; padding:0; box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Archivo', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{background:var(--blood); color:var(--paper);}
+  a{color:inherit; text-decoration:none;}
+
+  .mono{
+    font-family:'JetBrains Mono', monospace;
+    letter-spacing:0.06em;
+  }
+
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--blood);
+    outline-offset:3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:26px 44px;
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    background:linear-gradient(var(--paper) 40%, transparent);
+  }
+  .nav-mark{font-weight:700;}
+  .nav-links{display:flex; gap:26px;}
+  .nav-links a{opacity:0.7; transition:opacity .2s, color .2s;}
+  .nav-links a:hover{opacity:1; color:var(--blood);}
+  @media(max-width:640px){
+    .nav{padding:20px 22px;}
+    .nav-links{gap:16px; font-size:10.5px;}
+  }
+
+  /* ---------- INTRO ---------- */
+  .intro{
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:140px 24px 80px;
+  }
+  .intro-word{
+    font-size:clamp(15px,2vw,18px);
+    font-weight:700;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    margin-bottom:34px;
+  }
+  .intro-body{
+    max-width:760px;
+    font-size:clamp(17px,2.4vw,26px);
+    line-height:1.5;
+    font-weight:500;
+    text-transform:uppercase;
+    letter-spacing:0.005em;
+  }
+  .intro-body .accent{color:var(--blood);}
+  .intro-meta{
+    margin-top:40px;
+    font-size:11px;
+    color:var(--ash);
+    letter-spacing:0.14em;
+  }
+
+  /* ---------- PLATES (image-led sections) ---------- */
+  .plate-section{
+    padding:0 0 6px;
+  }
+  .plate{
+    width:100%;
+    height:86svh;
+    background:
+      repeating-linear-gradient(135deg, rgba(12,11,10,0.045) 0 2px, transparent 2px 16px),
+      linear-gradient(160deg,#DCD6C8,#C8C0AC);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .plate span{
+    font-size:11px;
+    letter-spacing:0.16em;
+    color:#6f6a60;
+    text-transform:uppercase;
+  }
+  .plate-caption{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:8px;
+    padding:18px 44px 60px;
+    font-size:12.5px;
+    letter-spacing:0.04em;
+  }
+  .plate-caption .name{
+    text-transform:uppercase;
+    font-weight:700;
+  }
+  .plate-caption .detail{
+    color:var(--ash);
+  }
+  @media(max-width:640px){
+    .plate{height:60svh;}
+    .plate-caption{padding:14px 22px 44px;}
+  }
+
+  /* ---------- DIVIDING LABEL BETWEEN STUDIOS / SUPPLY ---------- */
+  .divider{
+    padding:120px 44px 70px;
+    text-align:center;
+  }
+  .divider-eyebrow{
+    font-size:11px;
+    color:var(--blood);
+    letter-spacing:0.16em;
+    margin-bottom:14px;
+  }
+  .divider-title{
+    font-size:clamp(28px,5vw,48px);
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+  }
+  .divider-desc{
+    max-width:520px;
+    margin:16px auto 0;
+    font-size:14px;
+    line-height:1.6;
+    color:var(--ash);
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+  }
+  @media(max-width:640px){
+    .divider{padding:90px 22px 50px;}
+  }
+
+  /* ---------- SERVICES (kept quiet, plain list) ---------- */
+  .services{
+    padding:90px 44px 130px;
+    border-top:1px solid var(--line);
+    max-width:900px;
+    margin:0 auto;
+  }
+  .services-head{
+    font-size:11px;
+    color:var(--ash);
+    letter-spacing:0.14em;
+    margin-bottom:34px;
+    text-align:center;
+  }
+  .service-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    padding:20px 0;
+    border-bottom:1px solid var(--line);
+    font-size:clamp(15px,2vw,19px);
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+  }
+  .service-row .branch{
+    font-size:10.5px;
+    color:var(--ash);
+    letter-spacing:0.1em;
+  }
+  @media(max-width:640px){
+    .services{padding:70px 22px 100px;}
+    .service-row{flex-direction:column; gap:4px;}
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact{
+    padding:120px 24px 70px;
+    text-align:center;
+  }
+  .contact-eyebrow{
+    font-size:11px;
+    color:var(--ash);
+    letter-spacing:0.14em;
+    margin-bottom:20px;
+  }
+  .contact-link{
+    display:inline-block;
+    font-size:clamp(18px,3vw,30px);
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    font-weight:700;
+    border-bottom:1px solid transparent;
+    transition:color .2s, border-color .2s;
+  }
+  .contact-link:hover{color:var(--blood); border-color:var(--blood);}
+
+  .footer-bottom{
+    max-width:1100px;
+    margin:80px auto 0;
+    padding:26px 44px 40px;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:14px;
+    font-size:11px;
+    color:var(--ash);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+  .footer-links{display:flex; gap:20px;}
+  .footer-links a{opacity:0.75; transition:opacity .2s, color .2s;}
+  .footer-links a:hover{opacity:1; color:var(--blood);}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-mark">Eden Blood</div>
+  <div class="nav-links">
+    <a href="#studios">Studios</a>
+    <a href="#supply">Supply</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+</nav>
+
+<!-- INTRO -->
+<section class="intro">
+  <div class="intro-word mono">Est. 2023</div>
+  <p class="intro-body">
+    Espacio dedicado a la conceptualización, desarrollo y producción de proyectos audiovisuales, artísticos y de contenido. Transformamos ideas en proyectos <span class="accent">sólidos</span>, con claridad conceptual, calidad de producción y coherencia en cada etapa — adaptándonos a distintos formatos y escalas.
+  </p>
+  <div class="intro-meta mono">EDEN BLOOD STUDIOS — EDEN BLOOD SUPPLY</div>
+</section>
+
+<!-- STUDIOS -->
+<div class="divider" id="studios">
+  <div class="divider-eyebrow mono">01</div>
+  <div class="divider-title">Studios</div>
+  <p class="divider-desc">Conceptualización, desarrollo y producción de proyectos audiovisuales, artísticos y de contenido.</p>
+</div>
+
+<section class="plate-section">
+  <div class="plate"><span>Placeholder — reemplazar con imagen</span></div>
+  <div class="plate-caption">
+    <span class="name">Nombre del proyecto</span>
+    <span class="detail mono">Audiovisual — 2024</span>
+  </div>
+</section>
+
+<section class="plate-section">
+  <div class="plate"><span>Placeholder — reemplazar con imagen</span></div>
+  <div class="plate-caption">
+    <span class="name">Nombre del proyecto</span>
+    <span class="detail mono">Identidad de marca — 2024</span>
+  </div>
+</section>
+
+<section class="plate-section">
+  <div class="plate"><span>Placeholder — reemplazar con imagen</span></div>
+  <div class="plate-caption">
+    <span class="name">Nombre del proyecto</span>
+    <span class="detail mono">Producción de contenido — 2023</span>
+  </div>
+</section>
+
+<section class="plate-section">
+  <div class="plate"><span>Placeholder — reemplazar con imagen</span></div>
+  <div class="plate-caption">
+    <span class="name">Nombre del proyecto</span>
+    <span class="detail mono">Proyecto artístico — 2023</span>
+  </div>
+</section>
+
+<!-- SUPPLY -->
+<div class="divider" id="supply">
+  <div class="divider-eyebrow mono">02</div>
+  <div class="divider-title">Supply</div>
+  <p class="divider-desc">Ramificación del estudio como línea de indumentaria — un proyecto paralelo que explora creatividad y diseño desde la moda.</p>
+</div>
+
+<section class="plate-section">
+  <div class="plate"><span>Placeholder — reemplazar con imagen</span></div>
+  <div class="plate-caption">
+    <span class="name">Nombre del drop</span>
+    <span class="detail mono">Colección cápsula — SS24</span>
+  </div>
+</section>
+
+<section class="plate-section">
+  <div class="plate"><span>Placeholder — reemplazar con imagen</span></div>
+  <div class="plate-caption">
+    <span class="name">Nombre del drop</span>
+    <span class="detail mono">Sourcing y manufactura — FW24</span>
+  </div>
+</section>
+
+<section class="plate-section">
+  <div class="plate"><span>Placeholder — reemplazar con imagen</span></div>
+  <div class="plate-caption">
+    <span class="name">Nombre del drop</span>
+    <span class="detail mono">Pieza límitada — SS25</span>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="services-head mono">Servicios</div>
+  <div class="service-row">
+    <span>Consultoría creativa</span>
+    <span class="branch mono">Studios</span>
+  </div>
+  <div class="service-row">
+    <span>Branding e identidad visual</span>
+    <span class="branch mono">Studios</span>
+  </div>
+  <div class="service-row">
+    <span>Diseño gráfico para marcas y productos</span>
+    <span class="branch mono">Studios</span>
+  </div>
+  <div class="service-row">
+    <span>Sourcing y desarrollo de prendas</span>
+    <span class="branch mono">Supply</span>
+  </div>
+  <div class="service-row">
+    <span>Producción y gestión de manufactura textil</span>
+    <span class="branch mono">Supply</span>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contacto">
+  <div class="contact-eyebrow mono">Hablemos</div>
+  <a class="contact-link" href="mailto:hola@edenblood.studio">hola@edenblood.studio</a>
+</section>
+
+<div class="footer-bottom">
+  <span>© 2023–2026 Eden Blood</span>
+  <div class="footer-links">
+    <a href="#" aria-label="Instagram">Instagram</a>
+    <a href="#" aria-label="Behance">Behance</a>
+  </div>
+</div>
+
+</body>
+</html>
