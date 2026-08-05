@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0, viewport-fit=cover">
 <title>EB(s)</title>
 
-<!-- Favicon (SVG inline, sin archivos externos) -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23000'/%3E%3Cpath d='M50 12 C50 12 24 46 24 66 C24 81 36 90 50 90 C64 90 76 81 76 66 C76 46 50 12 50 12 Z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="https://res.cloudinary.com/mkk8uxao/image/upload/v1785893045/491422361_17990570900795989_2019395945611749638_n.jpg_tjlvxx.jpg">
 
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -40,25 +39,6 @@
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.28);
-  }
-
-  .title {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    gap: 0.35em;
-    z-index: 2;
-    color: #fff;
-    font-size: clamp(1.6rem, 6vw, 3rem);
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    text-align: center;
-    width: 90%;
-    justify-content: center;
-    flex-wrap: wrap;
-    pointer-events: none;
   }
 
   .links {
@@ -140,8 +120,7 @@
   </div>
 
   <script>
-    // Refuerzo para que el autoplay funcione en todos los navegadores móviles,
-    // incluso si el navegador bloquea el primer intento automático.
+
     const video = document.querySelector('video');
     const tryPlay = () => {
       const p = video.play();
