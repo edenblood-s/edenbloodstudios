@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EB(s)</title>
+
+<!-- Favicon: monograma simple en SVG (no requiere subir archivo aparte) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23E8EBF3'/%3E%3Ctext x='32' y='42' font-family='Georgia, serif' font-size='30' font-weight='600' text-anchor='middle' fill='%23111'%3EE%3C/text%3E%3C/svg%3E" />
+
+<!-- Meta para compartir en redes sociales (reemplaza con tu URL e imagen reales) -->
+<meta property="og:title" content="EB(s)" />
+<meta property="og:description" content="EB(s) — galería interactiva 3D" />
+<meta property="og:image" content="https://res.cloudinary.com/mkk8uxao/image/upload/v1787704665/WhatsApp_Image_2026-02-25_at_13.31.21_1_aiinkh.jpg" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #E8EBF3;
+    overflow: hidden;
+    font-family: system-ui, sans-serif;
+  }
+  #sphere-host {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+  }
+  #hint {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(0,0,0,0.35);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  #social {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 14px;
+    z-index: 10;
+  }
+  #social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    color: rgba(0,0,0,0.55);
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+  #social a:hover {
+    color: #111;
+    transform: translateY(-2px);
+  }
+  #social svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+</style>
+</head>
+<body>
+
+<div id="sphere-host"></div>
+<div id="hint">Arrastra para girar · clic para enfocar</div>
+
+<!-- Redes sociales y correo: reemplaza los href por tus enlaces reales -->
+<div id="social">
+  <a href="https://instagram.com/tu_usuario" target="_blank" rel="noopener" aria-label="Instagram">
+    <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.97.24 2.43.4a4.9 4.9 0 0 1 1.77 1.15 4.9 4.9 0 0 1 1.15 1.77c.16.46.35 1.26.4 2.43.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.97-.4 2.43a4.9 4.9 0 0 1-1.15 1.77 4.9 4.9 0 0 1-1.77 1.15c-.46.16-1.26.35-2.43.4-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.97-.24-2.43-.4a4.9 4.9 0 0 1-1.77-1.15 4.9 4.9 0 0 1-1.15-1.77c-.16-.46-.35-1.26-.4-2.43C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.24-1.97.4-2.43a4.9 4.9 0 0 1 1.15-1.77A4.9 4.9 0 0 1 5.59 1.8c.46-.16 1.26-.35 2.43-.4C9.29 1.34 9.67 1.33 12 1.33Zm0 1.8c-3.15 0-3.5.01-4.74.07-.96.04-1.48.2-1.83.34-.46.18-.79.39-1.13.73-.34.34-.55.67-.73 1.13-.14.35-.3.87-.34 1.83-.06 1.24-.07 1.59-.07 4.74s.01 3.5.07 4.74c.04.96.2 1.48.34 1.83.18.46.39.79.73 1.13.34.34.67.55 1.13.73.35.14.87.3 1.83.34 1.24.06 1.59.07 4.74.07s3.5-.01 4.74-.07c.96-.04 1.48-.2 1.83-.34.46-.18.79-.39 1.13-.73.34-.34.55-.67.73-1.13.14-.35.3-.87.34-1.83.06-1.24.07-1.59.07-4.74s-.01-3.5-.07-4.74c-.04-.96-.2-1.48-.34-1.83a3.1 3.1 0 0 0-.73-1.13 3.1 3.1 0 0 0-1.13-.73c-.35-.14-.87-.3-1.83-.34-1.24-.06-1.59-.07-4.74-.07Zm0 3.06a4.94 4.94 0 1 1 0 9.88 4.94 4.94 0 0 1 0-9.88Zm0 1.8a3.14 3.14 0 1 0 0 6.28 3.14 3.14 0 0 0 0-6.28Zm5.15-1.99a1.16 1.16 0 1 1-2.31 0 1.16 1.16 0 0 1 2.31 0Z"/></svg>
+  </a>
+  <a href="https://tiktok.com/@tu_usuario" target="_blank" rel="noopener" aria-label="TikTok">
+    <svg viewBox="0 0 24 24"><path d="M16.6 1.5h-3.2v14.4a2.9 2.9 0 1 1-2.05-2.77V10a6.1 6.1 0 1 0 5.25 6.05V9.1a7.9 7.9 0 0 0 4.6 1.47V7.4a4.7 4.7 0 0 1-4.6-4.6V1.5Z"/></svg>
+  </a>
+  <a href="https://wa.me/5215500000000" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M12 2.1a9.9 9.9 0 0 0-8.5 15L2 22l5.06-1.47A9.9 9.9 0 1 0 12 2.1Zm0 1.8a8.1 8.1 0 1 1-4.32 14.96l-.3-.18-3 .87.88-2.93-.2-.31A8.1 8.1 0 0 1 12 3.9Zm-3.02 4.4c-.2 0-.52.07-.79.37-.27.3-1.03 1-1.03 2.45s1.06 2.84 1.2 3.04c.15.2 2.06 3.27 5.11 4.44 2.53.98 3.04.79 3.59.74.55-.05 1.77-.72 2.02-1.42.25-.7.25-1.3.18-1.42-.07-.13-.27-.2-.55-.35-.29-.15-1.7-.84-1.96-.93-.26-.1-.46-.15-.65.15-.2.3-.75.93-.92 1.13-.17.2-.34.22-.63.07-.29-.15-1.24-.46-2.36-1.47-.87-.78-1.46-1.74-1.63-2.03-.17-.3-.02-.46.13-.6.13-.13.29-.35.44-.52.15-.17.2-.3.29-.5.1-.2.05-.37-.02-.52-.07-.15-.65-1.63-.9-2.23-.24-.58-.48-.5-.65-.5Z"/></svg>
+  </a>
+  <a href="mailto:hola@tudominio.com" aria-label="Correo">
+    <svg viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.4 2 7.1 6.2a.8.8 0 0 0 1 0L19.6 7H4.4ZM4 8.4V17h16V8.4l-6.86 6a2.6 2.6 0 0 1-3.28 0L4 8.4Z"/></svg>
+  </a>
+</div>
+
+<!-- three.js desde CDN -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from "three";
+
+/* ============ CONFIG ============ */
+const RADIUS = 180;
+const PLANE_SIZE = 50;
+const AUTO_ROT_Y = 0.0005;
+const AUTO_ROT_X = 0.0002;
+const DRAG_EASE = 0.2;
+const HOVER_SCALE = 1.2;
+const SCALE_EASE = 0.1;
+const OPACITY_EASE = 0.12;
+const INERTIA_DECAY = 0.94;
+const FLICK_SCALE = 0.9;
+
+const CLICK_SLOP = 6;
+const FOCUS_EASE = 0.14;
+const FOCUS_DISTANCE = 300;
+const FOCUS_FILL = 0.62;
+const BACKDROP_DIM = 0.16;
+
+/* ============ ENGINE (traducido de engine.ts, sin tipos) ============ */
+class ImageSphere {
+  constructor(host, imageUrls, opts = {}) {
+    this.host = host;
+    this.scene = new THREE.Scene();
+    this.group = new THREE.Group();
+    this.planes = [];
+
+    this.raycaster = new THREE.Raycaster();
+    this.mouse = new THREE.Vector2(-2, -2);
+    this.hovered = null;
+    this.focused = null;
+
+    this.rotationX = 0;
+    this.rotationY = 0;
+    this.currentRotationX = 0;
+    this.currentRotationY = 0;
+    this.baseRotationX = 0;
+    this.baseRotationY = 0;
+
+    this.dragging = false;
+    this.startX = 0;
+    this.startY = 0;
+
+    this.velX = 0;
+    this.velY = 0;
+    this.lastDX = 0;
+    this.lastDY = 0;
+
+    this.invQuat = new THREE.Quaternion();
+    this.worldPos = new THREE.Vector3();
+    this.centerPos = new THREE.Vector3();
+    this.tmpPos = new THREE.Vector3();
+
+    this.raf = 0;
+    this.running = false;
+    this.disposed = false;
+    this.cleanup = [];
+
+    const w = host.clientWidth || 1;
+    const h = host.clientHeight || 1;
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    this.renderer.setPixelRatio(dpr);
+    this.renderer.setClearColor(0x000000, 0);
+    this.renderer.setSize(w, h);
+    const canvas = this.renderer.domElement;
+    Object.assign(canvas.style, {
+      position: "absolute",
+      inset: "0",
+      width: "100%",
+      height: "100%",
+      display: "block",
+      cursor: "grab",
+    });
+    host.appendChild(canvas);
+
+    this.camera = new THREE.PerspectiveCamera(opts.fov ?? 25, w / h, 0.1, 2000);
+    this.camera.position.z = opts.distance ?? 520;
+    this.scene.add(this.group);
+
+    this.loadPlanes(imageUrls);
+    this.bindEvents();
+  }
+
+  isVideoUrl(url) {
+    return /\.(mp4|webm|ogg|mov|m4v)(\?.*)?$/i.test(url);
+  }
+
+  placeAndAdd(plane, aspect) {
+    plane.userData = { isHovered: false, opacity: 0, focus: 0, aspect };
+    plane.material.opacity = 0;
+
+    const phi = (Math.random() * 2 - 1) * Math.PI;
+    const theta = Math.random() * Math.PI * 2;
+    const r = RADIUS + (Math.random() - 0.5) * 80;
+    plane.position.set(
+      r * Math.sin(phi) * Math.cos(theta),
+      r * Math.sin(phi) * Math.sin(theta),
+      r * Math.cos(phi),
+    );
+
+    plane.userData.home = plane.position.clone();
+
+    this.group.add(plane);
+    this.planes.push(plane);
+
+    if (!this.running) this.renderStill();
+  }
+
+  loadVideoPlane(url) {
+    const video = document.createElement("video");
+    video.src = url;
+    video.crossOrigin = "anonymous";
+    video.loop = true;
+    video.muted = true;
+    video.playsInline = true;
+    video.autoplay = true;
+
+    // Guardamos el elemento para poder pausar/limpiar al destruir
+    this.videos = this.videos || [];
+    this.videos.push(video);
+
+    const onReady = () => {
+      if (this.disposed) return;
+      const tex = new THREE.VideoTexture(video);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.minFilter = THREE.LinearFilter;
+      tex.magFilter = THREE.LinearFilter;
+
+      const aspect = (video.videoWidth || 1) / (video.videoHeight || 1);
+      const geo = new THREE.PlaneGeometry(PLANE_SIZE * aspect, PLANE_SIZE);
+      const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true });
+      mat.depthWrite = false;
+      const plane = new THREE.Mesh(geo, mat);
+
+      this.placeAndAdd(plane, aspect);
+      video.play().catch(() => {});
+    };
+
+    video.addEventListener("loadedmetadata", onReady, { once: true });
+    video.load();
+  }
+
+  loadImagePlane(url) {
+    const loader = new THREE.TextureLoader();
+    loader.crossOrigin = "anonymous";
+    loader.load(url, (tex) => {
+      if (this.disposed) return;
+      tex.anisotropy = this.renderer.capabilities.getMaxAnisotropy();
+      tex.minFilter = THREE.LinearMipMapLinearFilter;
+      tex.magFilter = THREE.LinearFilter;
+      tex.colorSpace = THREE.SRGBColorSpace;
+
+      const aspect = (tex.image.width || 1) / (tex.image.height || 1);
+      const geo = new THREE.PlaneGeometry(PLANE_SIZE * aspect, PLANE_SIZE);
+      const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true });
+      mat.depthWrite = false;
+      const plane = new THREE.Mesh(geo, mat);
+
+      this.placeAndAdd(plane, aspect);
+    });
+  }
+
+  loadPlanes(urls) {
+    urls.forEach((url) => {
+      if (this.isVideoUrl(url)) this.loadVideoPlane(url);
+      else this.loadImagePlane(url);
+    });
+  }
+
+  bindEvents() {
+    const host = this.host;
+    const localMouse = (clientX, clientY) => {
+      const rect = host.getBoundingClientRect();
+      this.mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+      this.mouse.y = -(((clientY - rect.top) / rect.height) * 2 - 1);
+    };
+
+    let downX = 0;
+    let downY = 0;
+    const onDown = (e) => {
+      this.dragging = true;
+      this.startX = e.clientX;
+      this.startY = e.clientY;
+      downX = e.clientX;
+      downY = e.clientY;
+      this.velX = this.velY = 0;
+      this.lastDX = this.lastDY = 0;
+      this.renderer.domElement.style.cursor = "grabbing";
+    };
+    const onMove = (e) => {
+      localMouse(e.clientX, e.clientY);
+      if (this.dragging) {
+        const dx = e.clientX - this.startX;
+        const dy = e.clientY - this.startY;
+        this.rotationY += dx * 1.0;
+        this.rotationX -= dy * 1.0;
+        this.lastDX = dx;
+        this.lastDY = dy;
+        this.startX = e.clientX;
+        this.startY = e.clientY;
+      }
+    };
+    const release = () => {
+      if (!this.dragging) return;
+      this.dragging = false;
+      this.velY = this.lastDX * FLICK_SCALE;
+      this.velX = -this.lastDY * FLICK_SCALE;
+      this.renderer.domElement.style.cursor = "grab";
+    };
+    const onUp = (e) => {
+      const moved = Math.hypot(e.clientX - downX, e.clientY - downY);
+      release();
+      if (moved <= CLICK_SLOP && this.running) {
+        this.velX = this.velY = 0;
+        localMouse(e.clientX, e.clientY);
+        const hit = this.pick();
+        if (this.focused) this.focused = hit === this.focused ? null : hit;
+        else this.focused = hit;
+      }
+    };
+    const onLeave = () => {
+      release();
+      this.mouse.set(-2, -2);
+    };
+    const onKey = (e) => {
+      if (e.key === "Escape" && this.focused) this.focused = null;
+    };
+    window.addEventListener("keydown", onKey);
+    this.cleanup.push(() => window.removeEventListener("keydown", onKey));
+
+    host.addEventListener("pointerdown", onDown);
+    host.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    host.addEventListener("pointerleave", onLeave);
+    this.cleanup.push(() => {
+      host.removeEventListener("pointerdown", onDown);
+      host.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+      host.removeEventListener("pointerleave", onLeave);
+    });
+
+    this.ro = new ResizeObserver(() => this.resize());
+    this.ro.observe(host);
+  }
+
+  resize() {
+    if (this.disposed) return;
+    const w = this.host.clientWidth;
+    const h = this.host.clientHeight;
+    if (!w || !h) return;
+    this.renderer.setSize(w, h);
+    this.camera.aspect = w / h;
+    this.camera.updateProjectionMatrix();
+  }
+
+  pick() {
+    this.raycaster.setFromCamera(this.mouse, this.camera);
+    const hits = this.raycaster.intersectObjects(this.planes, false);
+    return hits.length > 0 ? hits[0].object : null;
+  }
+
+  hoverDetection() {
+    const next = this.pick();
+    if (next !== this.hovered) {
+      if (this.hovered) this.hovered.userData.isHovered = false;
+      this.hovered = next;
+      if (this.hovered) this.hovered.userData.isHovered = true;
+    }
+  }
+
+  start() {
+    if (this.running || this.disposed) return;
+    this.running = true;
+    this.raf = requestAnimationFrame(this.loop);
+  }
+
+  stop() {
+    this.running = false;
+    if (this.raf) cancelAnimationFrame(this.raf);
+    this.raf = 0;
+  }
+
+  loop = () => {
+    if (!this.running) return;
+
+    if (!this.dragging && (this.velX !== 0 || this.velY !== 0)) {
+      this.rotationY += this.velY;
+      this.rotationX -= this.velX;
+      this.velX *= INERTIA_DECAY;
+      this.velY *= INERTIA_DECAY;
+      if (Math.abs(this.velX) < 0.01) this.velX = 0;
+      if (Math.abs(this.velY) < 0.01) this.velY = 0;
+    }
+
+    this.baseRotationY += AUTO_ROT_Y;
+    this.baseRotationX += AUTO_ROT_X;
+    this.currentRotationX += (this.rotationX - this.currentRotationX) * DRAG_EASE;
+    this.currentRotationY += (this.rotationY - this.currentRotationY) * DRAG_EASE;
+    this.group.rotation.x = this.baseRotationX + this.currentRotationX * 0.002;
+    this.group.rotation.y = this.baseRotationY + this.currentRotationY * 0.002;
+
+    if (!this.dragging && !this.focused) this.hoverDetection();
+    else if (this.focused && this.hovered) {
+      this.hovered.userData.isHovered = false;
+      this.hovered = null;
+    }
+    const anyFocused = this.focused !== null;
+
+    this.centerPos.set(0, 0, this.camera.position.z - FOCUS_DISTANCE);
+    const viewH = 2 * FOCUS_DISTANCE * Math.tan((this.camera.fov * Math.PI) / 360);
+    const focusScale = (viewH * FOCUS_FILL) / PLANE_SIZE;
+
+    this.invQuat.copy(this.group.quaternion).invert();
+    for (const plane of this.planes) {
+      plane.quaternion.copy(this.invQuat);
+
+      const focusTarget = plane === this.focused ? 1 : 0;
+      const f = plane.userData.focus + (focusTarget - plane.userData.focus) * FOCUS_EASE;
+      plane.userData.focus = f;
+
+      if (f > 0.0005) {
+        this.tmpPos.copy(this.centerPos);
+        this.group.worldToLocal(this.tmpPos);
+        plane.position.copy(plane.userData.home).lerp(this.tmpPos, f);
+      } else if (plane.position.x !== plane.userData.home.x || plane.position.z !== plane.userData.home.z) {
+        plane.position.copy(plane.userData.home);
+      }
+
+      plane.getWorldPosition(this.worldPos);
+      const depth = this.worldPos.z;
+
+      const zScale = 0.8 + depth / 2000;
+      let target = plane.userData.isHovered ? zScale * HOVER_SCALE : zScale;
+      target = target + (focusScale - target) * f;
+      const s = plane.scale.x + (target - plane.scale.x) * SCALE_EASE;
+      plane.scale.set(s, s, s);
+
+      let wantOpacity = 1;
+      if (anyFocused) wantOpacity = BACKDROP_DIM + (1 - BACKDROP_DIM) * f;
+      const o = plane.userData.opacity + (wantOpacity - plane.userData.opacity) * OPACITY_EASE;
+      plane.userData.opacity = o;
+      plane.material.opacity = o;
+
+      plane.renderOrder = f > 0.5 ? 1 : 0;
+    }
+
+    this.renderer.render(this.scene, this.camera);
+    this.raf = requestAnimationFrame(this.loop);
+  };
+
+  renderStill() {
+    this.invQuat.copy(this.group.quaternion).invert();
+    for (const plane of this.planes) {
+      plane.quaternion.copy(this.invQuat);
+      plane.getWorldPosition(this.worldPos);
+      const zScale = 0.8 + this.worldPos.z / 2000;
+      plane.scale.set(zScale, zScale, zScale);
+      plane.userData.opacity = 1;
+      plane.material.opacity = 1;
+    }
+    this.renderer.render(this.scene, this.camera);
+  }
+
+  destroy() {
+    this.disposed = true;
+    this.stop();
+    this.cleanup.forEach((fn) => fn());
+    this.ro?.disconnect();
+    for (const plane of this.planes) {
+      plane.geometry.dispose();
+      const mat = plane.material;
+      mat.map?.dispose();
+      mat.dispose();
+    }
+    (this.videos || []).forEach((v) => {
+      v.pause();
+      v.src = "";
+      v.load();
+    });
+    this.renderer.dispose();
+    this.renderer.forceContextLoss?.();
+    const canvas = this.renderer.domElement;
+    canvas.parentNode?.removeChild(canvas);
+  }
+}
+
+
+const imageUrls = [
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787704666/WhatsApp_Image_2026-02-25_at_13.31.21_5_itmxjt.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787704665/WhatsApp_Image_2026-02-25_at_13.31.21_1_aiinkh.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787704665/WhatsApp_Image_2026-02-25_at_13.31.21_thhdxf.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787704665/WhatsApp_Image_2026-02-25_at_13.31.21_2_bc57et.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787704665/WhatsApp_Image_2026-02-25_at_13.31.21_3_flmdvy.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787704664/WhatsApp_Image_2026-02-25_at_13.31.21_4_okqguk.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787704663/WhatsApp_Image_2026-02-25_at_13.31.21_6_s77n3u.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787704663/WhatsApp_Image_2026-02-25_at_13.31.21_8_rc1enw.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787704663/WhatsApp_Image_2026-02-25_at_13.31.21_7_ryeoqo.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787705021/BINKAN_HERMONIA_LOOKBOOK-10_bzbsh7.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787705021/BINKAN_HERMONIA_LOOKBOOK-23_zzvvje.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787705020/BINKAN_HERMONIA_LOOKBOOK-12_daotje.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787705018/BINKAN_HERMONIA_LOOKBOOK-11_woyd3g.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787705007/BINKAN_HERMONIA_LOOKBOOK-36_qhe9nz.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787705248/SAYURI-Y-SOPHOLOV-CARRUSEL-OPCION-1_09_d06clo.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787705247/SAYURI-Y-SOPHOLOV-CARRUSEL-OPCION-1_08_slpzch.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787705248/SAYURI-Y-SOPHOLOV-CARRUSEL-OPCION-1_10_unhn8b.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787705247/SAYURI-Y-SOPHOLOV-CARRUSEL-OPCION-1_07_w7v6xp.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787705245/SAYURI-Y-SOPHOLOV-CARRUSEL-OPCION-1_05_gdgsxe.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787705245/SAYURI-Y-SOPHOLOV-CARRUSEL-OPCION-1_04_i66ecp.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787705244/SAYURI-Y-SOPHOLOV-CARRUSEL-OPCION-1_01_onfeaf.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787705244/SAYURI-Y-SOPHOLOV-CARRUSEL-OPCION-1_03_dwkkp5.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787705244/SAYURI-Y-SOPHOLOV-CARRUSEL-OPCION-1_06_ohowi0.jpg",
+  "https://res.cloudinary.com/mkk8uxao/image/upload/v1787705242/SAYURI-Y-SOPHOLOV-CARRUSEL-OPCION-1_02_lu8hhu.jpg",
+  
+ 
+];
+
+const host = document.getElementById("sphere-host");
+const sphere = new ImageSphere(host, imageUrls, { distance: 520, fov: 25 });
+sphere.start();
+</script>
+
+</body>
+</html>
