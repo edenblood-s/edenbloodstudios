@@ -48,7 +48,7 @@
 <script type="module">
 import * as THREE from "three";
 
-/* ============ CONFIG ============ */
+
 const RADIUS = 180;
 const PLANE_SIZE = 50;
 const AUTO_ROT_Y = 0.0005;
@@ -66,7 +66,7 @@ const FOCUS_DISTANCE = 300;
 const FOCUS_FILL = 0.62;
 const BACKDROP_DIM = 0.16;
 
-/* ============ ENGINE (traducido de engine.ts, sin tipos) ============ */
+
 class ImageSphere {
   constructor(host, imageUrls, opts = {}) {
     this.host = host;
@@ -166,7 +166,7 @@ class ImageSphere {
     video.playsInline = true;
     video.autoplay = true;
 
-    // Guardamos el elemento para poder pausar/limpiar al destruir
+    
     this.videos = this.videos || [];
     this.videos.push(video);
 
@@ -435,31 +435,7 @@ class ImageSphere {
   }
 }
 
-/* ============ USO ============ */
-// Reemplaza estas URLs por tus propias imágenes (mismo dominio o con CORS habilitado)
-const imageUrls = [
-  "https://picsum.photos/seed/1/300/300",
-  "https://picsum.photos/seed/2/300/400",
-  "https://picsum.photos/seed/3/400/300",
-  "https://picsum.photos/seed/4/300/300",
-  "https://picsum.photos/seed/5/300/300",
-  "https://picsum.photos/seed/6/400/300",
-  "https://picsum.photos/seed/7/300/400",
-  "https://picsum.photos/seed/8/300/300",
-  "https://picsum.photos/seed/9/300/300",
-  "https://picsum.photos/seed/10/400/300",
-  "https://picsum.photos/seed/11/300/300",
-  "https://picsum.photos/seed/12/300/400",
-  "https://picsum.photos/seed/13/300/300",
-  "https://picsum.photos/seed/14/400/300",
-  "https://picsum.photos/seed/15/300/300",
-  "https://picsum.photos/seed/16/300/300",
-  "https://picsum.photos/seed/17/300/400",
-  "https://picsum.photos/seed/18/400/300",
-  "https://picsum.photos/seed/19/300/300",
-  "https://picsum.photos/seed/20/300/300",
-  // Ejemplo de video: cualquier url .mp4/.webm se detecta automáticamente
-  "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+  "https://res.cloudinary.com/mkk8uxao/video/upload/v1785891555/finalebs_wj4fcd.mp4",
 ];
 
 const host = document.getElementById("sphere-host");
