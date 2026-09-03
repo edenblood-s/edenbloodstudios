@@ -26,7 +26,7 @@
     user-select: none;
   }
 
-  /* Fallback en píxeles reales para navegadores sin soporte de dvh (algunos Android/tablets viejas) */
+ 
   .stage {
     position: relative;
     width: 100vw;
@@ -45,7 +45,7 @@
     object-fit: cover;
     object-position: center;
     background: #000;
-    pointer-events: none; /* evita que un tap muestre controles nativos en iOS/Android */
+    pointer-events: none;
   }
 
   .overlay {
@@ -101,7 +101,7 @@
 
   .links a:hover { opacity: 0.7; }
 
-  /* Teléfonos */
+  
   @media (max-width: 480px) {
     .links {
       bottom: calc(24px + env(safe-area-inset-bottom, 0px));
@@ -116,7 +116,7 @@
     }
   }
 
-  /* Tablets en horizontal / pantallas bajas */
+ 
   @media (max-height: 420px) {
     .links {
       bottom: calc(14px + env(safe-area-inset-bottom, 0px));
@@ -124,7 +124,7 @@
     .title { top: 45%; }
   }
 
-  /* Tablets (iPad, Android tablets) en general */
+  
   @media (min-width: 600px) and (max-width: 1024px) {
     .title {
       font-size: clamp(2.2rem, 5vw, 3.6rem);
@@ -158,9 +158,7 @@
 
     <div class="overlay"></div>
 
-    <h1 class="title">
-      <span>V</span><span>I</span><span>S</span><span>I</span><span>O</span><span>N</span><span>E</span><span>S</span>
-    </h1>
+    
 
     <div class="links">
       <a href="mailto:hola@edenbloodstudios.com">Correo</a>
@@ -169,7 +167,7 @@
   </div>
 
   <script>
-    // Fix de altura real en móviles (barras de navegador que aparecen/desaparecen)
+    
     function setRealVH() {
       const vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -178,11 +176,10 @@
     window.addEventListener('resize', setRealVH);
     window.addEventListener('orientationchange', setRealVH);
 
-    // Autoplay robusto en iOS/Android/tablets
+
     const video = document.getElementById('bgVideo');
 
-    // Forzar propiedades vía JS: algunos navegadores móviles ignoran
-    // el atributo "muted" del HTML si el video ya se cargó antes.
+    
     video.muted = true;
     video.defaultMuted = true;
     video.setAttribute('muted', '');
@@ -192,8 +189,7 @@
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise.catch(() => {
-          // Si el navegador bloquea el autoplay, reintenta en la
-          // primera interacción del usuario (requerido por iOS Safari).
+       
           const resume = () => {
             video.muted = true;
             video.play().catch(() => {});
@@ -212,8 +208,7 @@
       video.addEventListener('canplay', attemptPlay, { once: true });
     }
 
-    // Reintenta si el video se pausa solo (algunos Android lo hacen
-    // al volver de segundo plano o al cambiar de pestaña).
+  
     video.addEventListener('pause', () => {
       if (document.visibilityState === 'visible') {
         video.play().catch(() => {});
