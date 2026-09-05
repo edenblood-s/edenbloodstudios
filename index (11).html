@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#000000">
+<title>EB(s)</title>
+
+<link rel="icon" type="image/svg+xml" href="https://res.cloudinary.com/mkk8uxao/image/upload/v1788565029/EBsermerr_dyqptx.png">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    height: 100%;
+    width: 100%;
+    font-family: Helvetica, Arial, sans-serif;
+    background: #000;
+    overflow: hidden;
+    overscroll-behavior: none;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  
+  .stage {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    height: calc(var(--vh, 1vh) * 100);
+    background: #000;
+    overflow: hidden;
+  }
+
+  video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    background: #000;
+    pointer-events: none; 
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.28);
+  }
+
+  .links {
+    position: absolute;
+    bottom: calc(34px + env(safe-area-inset-bottom, 0px));
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 28px;
+    z-index: 2;
+    width: 100%;
+    justify-content: center;
+    padding: 0 16px;
+  }
+
+  .links a {
+    color: #fff;
+    text-decoration: none;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+    padding-bottom: 4px;
+    transition: opacity 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .links a:hover { opacity: 0.7; }
+
+  .coords-top span,
+  .mid-left span,
+  .mid-right {
+    color: #fff;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .coords-top {
+    position: absolute;
+    top: calc(28px + env(safe-area-inset-top, 0px));
+    left: 0;
+    right: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .mid-left {
+    position: absolute;
+    top: 50%;
+    left: 24px;
+    transform: translateY(-50%);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .mid-right {
+    position: absolute;
+    top: 50%;
+    right: 24px;
+    transform: translateY(-50%);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* Teléfonos */
+  @media (max-width: 480px) {
+    .links {
+      bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+      gap: 18px;
+    }
+    .links a {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+    }
+    .coords-top span,
+    .mid-left span,
+    .mid-right {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+    }
+    .coords-top {
+      top: calc(18px + env(safe-area-inset-top, 0px));
+    }
+    .mid-left {
+      left: 16px;
+    }
+    .mid-right {
+      right: 16px;
+    }
+  }
+
+  
+  @media (max-height: 420px) {
+    .links {
+      bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    }
+  }
+
+  
+  @media (min-width: 600px) and (max-width: 1024px) {
+    .links a {
+      font-size: 0.8rem;
+    }
+    .coords-top span,
+    .mid-left span,
+    .mid-right {
+      font-size: 0.8rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="stage">
+
+    <video
+      id="bgVideo"
+      autoplay
+      muted
+      loop
+      playsinline
+      webkit-playsinline="true"
+      x5-playsinline="true"
+      x5-video-player-type="h5"
+      x5-video-player-fullscreen="false"
+      disablePictureInPicture
+      disableRemotePlayback
+      preload="auto"
+    >
+      <source src="https://res.cloudinary.com/mkk8uxao/video/upload/q_auto,f_auto,w_1280/v1788566183/BACK_1_ihgqqw.mp4" type="video/mp4">
+    </video>
+
+    <div class="overlay"></div>
+
+    <div class="coords-top">
+      <span id="cursorCoords">X: 0000&nbsp; Y: 0000</span>
+    </div>
+
+    <div class="mid-left">
+      <span id="clock">00:00:00.000000</span>
+    </div>
+
+    <div class="mid-right">EB(s)</div>
+
+    <div class="links">
+      <a href="mailto:hola@edenbloodstudios.com">Correo</a>
+      <a href="https://www.instagram.com/edenbloodstudios/" target="_blank" rel="noreferrer">Instagram</a>
+    </div>
+  </div>
+
+  <script>
+    
+    function setRealVH() {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    setRealVH();
+    window.addEventListener('resize', setRealVH);
+    window.addEventListener('orientationchange', setRealVH);
+
+    
+    const video = document.getElementById('bgVideo');
+
+    
+    video.muted = true;
+    video.defaultMuted = true;
+    video.setAttribute('muted', '');
+    video.playsInline = true;
+
+    function attemptPlay() {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          
+          const resume = () => {
+            video.muted = true;
+            video.play().catch(() => {});
+          };
+          ['touchstart', 'touchend', 'click', 'scroll'].forEach(evt =>
+            document.addEventListener(evt, resume, { once: true, passive: true })
+          );
+        });
+      }
+    }
+
+    if (video.readyState >= 2) {
+      attemptPlay();
+    } else {
+      video.addEventListener('loadeddata', attemptPlay, { once: true });
+      video.addEventListener('canplay', attemptPlay, { once: true });
+    }
+
+    
+    video.addEventListener('pause', () => {
+      if (document.visibilityState === 'visible') {
+        video.play().catch(() => {});
+      }
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        video.play().catch(() => {});
+      }
+    });
+
+    
+    const coordsEl = document.getElementById('cursorCoords');
+
+    document.addEventListener('mousemove', (e) => {
+      const x = String(Math.round(e.clientX)).padStart(4, '0');
+      const y = String(Math.round(e.clientY)).padStart(4, '0');
+      coordsEl.textContent = `X: ${x}  Y: ${y}`;
+    }, { passive: true });
+
+    
+    const clockEl = document.getElementById('clock');
+    const CITY_TIMEZONE = 'America/Mexico_City';
+
+    function updateClock() {
+      const now = new Date();
+
+      const parts = new Intl.DateTimeFormat('en-GB', {
+        timeZone: CITY_TIMEZONE,
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      }).formatToParts(now);
+
+      const get = (type) => parts.find(p => p.type === type).value;
+      const hh = get('hour');
+      const mm = get('minute');
+      const ss = get('second');
+
+      
+      const ms = now.getMilliseconds();
+      const subMs = Math.floor((performance.now() * 1000) % 1000);
+      const micro = String(ms).padStart(3, '0') + String(subMs).padStart(3, '0');
+
+      clockEl.textContent = `${hh}:${mm}:${ss}.${micro}`;
+      requestAnimationFrame(updateClock);
+    }
+    requestAnimationFrame(updateClock);
+  </script>
+</body>
+</html>
